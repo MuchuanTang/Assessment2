@@ -1,6 +1,4 @@
-# Assessment2
+# Distribution management system
 
-分销管理系统
-
-1. page--客户端工程；
-2. api--后台接口工程；
+1. frontend
+2. afterend
