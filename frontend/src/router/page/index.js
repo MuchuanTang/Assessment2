@@ -2,7 +2,7 @@
 export default [
   {
     path: '/',
-    name: '主页',
+    name: 'home',
     component: () => import('@/views/home/home'),
     meta: {
       keepAlive: true,
@@ -12,7 +12,7 @@ export default [
   },
   {
     path: '/productManage/productinfo',
-    name: '产品管理',
+    name: 'productManage',
     component: () => import('@/views/productManage/productinfo'),
     meta: {
       keepAlive: true,
@@ -22,7 +22,7 @@ export default [
   },
   {
     path: '/order/orderForSeller',
-    name: '订单管理',
+    name: 'orderManage',
     component: () => import('@/views/order/orderForSeller'),
     meta: {
       keepAlive: true,

@@ -9,17 +9,17 @@
         autocomplete="off"
       ></el-input>
       <el-button class="mar_l10" @click="query" size="mini" type="primary"
-        >查询</el-button
+        >query</el-button
       >
       <el-button
         class="mar_l10"
         size="mini"
         type="primary"
         @click="dialogFormShowF()"
-        >新增产品</el-button
+        >Add Product</el-button
       >
       <el-checkbox class="mar_l10" v-model="isSelect" @change="isSelectChange"
-        >只展示库存预警数据</el-checkbox
+        >Only display the inventory warning data</el-checkbox
       >
       <el-input
         style="width: 50px"
@@ -29,7 +29,7 @@
         autocomplete="off"
         @blur="query"
       ></el-input>
-      (库存预警默认为5)
+      (Inventory alert defaults to 5)
     </div>
     <div>
       <el-table
@@ -39,13 +39,13 @@
         border
         height="550"
       >
-        <el-table-column prop="id" label="产品ID"> </el-table-column>
-        <el-table-column prop="name" label="产品名称"> </el-table-column>
-        <el-table-column prop="des" label="描述"> </el-table-column>
-        <el-table-column prop="price" label="价格"> </el-table-column>
-        <el-table-column prop="creatDate" label="录入时间"> </el-table-column>
-        <el-table-column prop="supplier" label="产品类型"> </el-table-column>
-        <el-table-column label="库存数量">
+        <el-table-column prop="id" label="ID"> </el-table-column>
+        <el-table-column prop="name" label="Name"> </el-table-column>
+        <el-table-column prop="des" label="Des"> </el-table-column>
+        <el-table-column prop="price" label="Price"> </el-table-column>
+        <el-table-column prop="creatDate" label="CreatDate"> </el-table-column>
+        <el-table-column prop="supplier" label="Supplier"> </el-table-column>
+        <el-table-column label="quantityInStock">
           <template slot-scope="scope">
             <span v-if="scope.row.warn" style="color: red;">
               {{ scope.row.lastNum }} <i class="el-icon-warning"></i>
@@ -58,20 +58,19 @@
         <el-table-column align="left" label="操作">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
-              >编辑</el-button
+              >Edit</el-button
             >
             <el-button
               size="mini"
               type="danger"
               @click="handleDelete(scope.$index, scope.row)"
-              >删除</el-button
+              >Delete</el-button
             >
           </template>
         </el-table-column>
       </el-table>
     </div>
 
-    <!-- 新增/修改 -->
     <el-dialog
       :title="dialogTitle"
       :visible.sync="dialogFormShow"
@@ -80,11 +79,11 @@
       <el-form ref="formF" :model="formF" label-width="80px">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="供应商种类">
+            <el-form-item label="Supplier Type">
               <el-select
                 size="mini"
                 v-model="formF.supplier"
-                placeholder="请选择供应商种类"
+                placeholder=""
               >
                 <el-option
                   v-for="item in this.supplierList"
@@ -96,18 +95,18 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="产品名称">
+            <el-form-item label="Name">
               <el-input
                 size="mini"
                 v-model="formF.name"
                 autocomplete="off"
-                :disabled="dialogTitle == '修改'"
+                :disabled="dialogTitle == 'Edit'"
               ></el-input> </el-form-item
           ></el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="描述">
+            <el-form-item label="Des">
               <el-input
                 size="mini"
                 v-model="formF.des"
@@ -116,7 +115,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="价格" type="price">
+            <el-form-item label="Price" type="price">
               <el-input
                 size="mini"
                 v-model="formF.price"
@@ -126,7 +125,7 @@
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="录入时间" type="creatDate">
+            <el-form-item label="creatDate" type="creatDate">
               <el-input
                 size="mini"
                 v-model="formF.creatDate"
@@ -136,7 +135,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="库存数量" type="lastNum">
+            <el-form-item label="quantityInStock" type="lastNum">
               <el-input
                 size="mini"
                 v-model="formF.lastNum"
@@ -146,9 +145,9 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="onClose()">取 消</el-button>
+        <el-button size="mini" @click="onClose()">cancle</el-button>
         <el-button size="mini" type="primary" @click="onSubMit('formF')"
-          >确 定</el-button
+          >SubMit</el-button
         >
       </div>
     </el-dialog>
@@ -222,12 +221,11 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           let param;
-          //新增菜单
-          if (this.dialogTitle == "新增") {
+          if (this.dialogTitle == "Add") {
             let flag = this.productList.find(e => e.name == this.formF.name)
             if(flag){
               this.$message({
-                message: "产品名已存在！",
+                message: "Product name already exists!",
                 type: "warning",
               });
               return
@@ -246,7 +244,6 @@ export default {
               this.query();
             });
           } else {
-            //修改菜单
             param = { ...this.formF };
             delete param.warn
             productEdit(param).then((res) => {
@@ -254,7 +251,7 @@ export default {
               this.query();
             });
           }
-          this.$refs.formF.resetFields(); //清空所有表单项
+          this.$refs.formF.resetFields(); 
           this.dialogFormShow = false;
         } else {
           return false;
@@ -267,18 +264,17 @@ export default {
     handleEdit(index, row) {
       console.log(row);
       this.dialogFormShow = true;
-      this.dialogTitle = "修改";
+      this.dialogTitle = "Edit";
       this.formF = { ...row };
     },
     handleDelete(index, row) {
       productDelete(row.id).then((res) => {
-        // console.log(res);
         this.query();
       });
     },
     dialogFormShowF() {
       this.dialogFormShow = true;
-      this.dialogTitle = "新增";
+      this.dialogTitle = "Add";
       this.formF = { ...this.formBase };
     },
   },
