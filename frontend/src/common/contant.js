@@ -1,13 +1,13 @@
 export const menu = [
   {
     icon: 'el-icon-suitcase',
-    title: '产品管理',
+    title: 'productManage',
     url: '/productManage',
     keepAlive: true,
     children: [
       {
         icon: 'el-icon-tickets',
-        title: '产品信息',
+        title: 'productinfo',
         url: '/productManage/productinfo',
         keepAlive: true,
       },
@@ -15,13 +15,13 @@ export const menu = [
   },
   {
     icon: 'el-icon-suitcase',
-    title: '订单管理',
+    title: 'orderManage',
     url: '/order',
     keepAlive: true,
     children: [
       {
         icon: 'el-icon-tickets',
-        title: '全部订单',
+        title: 'allOrder',
         url: '/order/orderForSeller',
         keepAlive: true,
       },
@@ -31,18 +31,18 @@ export const menu = [
 export const supplierList = [
   {
     id: '1',
-    name: '供应商一',
+    name: 'supplier one',
   },
   {
     id: '2',
-    name: '供应商二',
+    name: 'supplier two',
   },
   {
     id: '3',
-    name: '供应商三',
+    name: 'supplier three',
   },
   {
     id: '4',
-    name: '供应商四',
+    name: 'supplier four',
   },
 ]
