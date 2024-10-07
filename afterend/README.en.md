@@ -1,7 +1,7 @@
 # Node
 
 #### Description
-this is a Node package
+Description
 
 #### Software Architecture
 Software architecture description
