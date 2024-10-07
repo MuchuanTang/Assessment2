@@ -1,5 +1,5 @@
 import axios from '@/router/axios';
-// 查询
+// productListQuery
 export const productListQuery = (params) => {
   return axios({
     url: '/api/product/productListQuery',
@@ -9,7 +9,7 @@ export const productListQuery = (params) => {
     },
   })
 }
-// 查询
+// saleListQuery
 export const saleListQuery = () => {
   return axios({
     url: '/api/order/saleListQuery',
@@ -17,7 +17,7 @@ export const saleListQuery = () => {
     params: {},
   })
 }
-// 新增
+// productAdd
 export const productAdd = (param) => {
   return axios({
     url: '/api/product/addProduct',
@@ -25,7 +25,7 @@ export const productAdd = (param) => {
     data: param,
   })
 }
-// 编辑
+// productEdit
 export const productEdit = (param) => {
   return axios({
     url: '/api/product/updataProduct',
@@ -33,7 +33,7 @@ export const productEdit = (param) => {
     data: param,
   })
 }
-// 编辑
+// productEdit1
 export const productEdit1 = (param) => {
   return axios({
     url: '/api/product/updataProductNum',
@@ -41,7 +41,7 @@ export const productEdit1 = (param) => {
     data: param,
   })
 }
-// 删除
+// productDelete
 export const productDelete = (param) => {
   return axios({
     url: '/api/product/deleteProduct',
@@ -51,7 +51,7 @@ export const productDelete = (param) => {
     },
   })
 }
-// 根据id查询详情
+// queryProductDetails
 export const queryProductDetails = (name) => {
   return axios({
     url: '/api/product/queryProductDetails',
@@ -59,14 +59,5 @@ export const queryProductDetails = (name) => {
     params: {
       name: name
     },
-  })
-}
-
-//菜单图片删除
-export const unUpload = (param) => {
-  return axios({
-    url: 'api/unUpload',
-    method: 'post',
-    data: param
   })
 }

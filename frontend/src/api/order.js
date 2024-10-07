@@ -1,5 +1,5 @@
 import axios from '@/router/axios';
-// 查询
+// orderListQuery
 export const orderListQuery = (params) => {
   return axios({
     url: '/api/order/orderListQuery',
@@ -9,7 +9,7 @@ export const orderListQuery = (params) => {
     },
   })
 }
-// 新增
+// orderAdd
 export const orderAdd = (param) => {
   return axios({
     url: '/api/order/addOrder',
@@ -17,7 +17,7 @@ export const orderAdd = (param) => {
     data: param,
   })
 }
-// 编辑
+// orderEdit
 export const orderEdit = (param) => {
   return axios({
     url: '/api/order/updataOrder',
@@ -25,7 +25,7 @@ export const orderEdit = (param) => {
     data: param,
   })
 }
-// 删除
+// orderDelete
 export const orderDelete = (param) => {
   return axios({
     url: '/api/order/deleteOrder',
@@ -33,24 +33,5 @@ export const orderDelete = (param) => {
     params: {
       id: param
     },
-  })
-}
-// 根据父id查询子菜单
-export const getOrderByfarId = (param) => {
-  // return axios({
-  //   url: '/api/order/info/data/childrenList',
-  //   method: 'get',
-  //   params: {
-  //     parentId: param
-  //   },
-  // })
-}
-
-//菜单图片删除
-export const unUpload = (param) => {
-  return axios({
-    url: 'api/unUpload',
-    method: 'post',
-    data: param
   })
 }
