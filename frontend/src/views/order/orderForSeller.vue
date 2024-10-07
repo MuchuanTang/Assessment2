@@ -27,7 +27,7 @@
         border
         height="550"
       >
-        <el-table-column prop="id" label="订单ID" width="130">
+        <el-table-column prop="id" label="ID" width="130">
         </el-table-column>
         <el-table-column prop="productName" label="productName"> </el-table-column>
         <el-table-column prop="productPrice" label="v"></el-table-column>
