@@ -55,7 +55,7 @@
             </span>
           </template>  
         </el-table-column>
-        <el-table-column align="left" label="操作">
+        <el-table-column align="left" label="other">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
               >Edit</el-button

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex_row align_center" style="padding: 10px 10px">
-      <span> 订单编号： </span>
+      <span> Order ID： </span>
       <el-input
         style="width: 150px"
         size="mini"
@@ -9,14 +9,14 @@
         autocomplete="off"
       ></el-input>
       <el-button class="mar_l10" @click="query" size="mini" type="primary"
-        >查询</el-button
+        >query</el-button
       >
       <el-button
         class="mar_l10"
         size="mini"
         type="primary"
         @click="dialogFormShowF()"
-        >新增订单</el-button
+        >Add Order</el-button
       >
     </div>
     <div>
@@ -29,111 +29,167 @@
       >
         <el-table-column prop="id" label="订单ID" width="130">
         </el-table-column>
-        <el-table-column prop="productName" label="产品名称"> </el-table-column>
-        <el-table-column prop="productPrice" label="产品价格"></el-table-column>
-        <!-- <el-table-column prop="productNum" label="产品库存"> </el-table-column> -->
-        <el-table-column prop="buyNum" label="销售数量"> </el-table-column>
-        <el-table-column prop="buyAmount" label="销售金额"> </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" width="160">
+        <el-table-column prop="productName" label="productName"> </el-table-column>
+        <el-table-column prop="productPrice" label="v"></el-table-column>
+        <el-table-column prop="buyNum" label="buyNum"> </el-table-column>
+        <el-table-column prop="buyAmount" label="buyAmount"> </el-table-column>
+        <el-table-column prop="createTime" label="createTime" width="160">
         </el-table-column>
-        <el-table-column prop="userName" label="用户"> </el-table-column>
-        <el-table-column prop="phone" label="联系方式"> </el-table-column>
-        <el-table-column prop="remark" label="备注"> </el-table-column>
-        <!-- <el-table-column prop="seller" label="销售"> </el-table-column> -->
-        <el-table-column align="left" label="操作" width="150">
+        <el-table-column prop="userName" label="userName"> </el-table-column>
+        <el-table-column prop="phone" label="phone"> </el-table-column>
+        <el-table-column prop="remark" label="remark"> </el-table-column>
+        <el-table-column align="left" label="other" width="150">
           <template slot-scope="scope">
-            <el-button size="mini" @click="sell(scope.$index, scope.row)"
-              >出库</el-button
-            >
             <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
-              >编辑</el-button
+              >Edit</el-button
             >
             <el-button
               size="mini"
               type="danger"
               @click="handleDelete(scope.$index, scope.row)"
-              >删除</el-button
+              >Delete</el-button
             >
           </template>
         </el-table-column>
       </el-table>
     </div>
 
-    <!-- 新增/修改 -->
     <el-dialog
-      title="销售数据分析"
+      :title="dialogTitle"
       :visible.sync="dialogFormShow"
       :close-on-click-modal="false"
     >
       <el-form ref="formF" :model="formF" label-width="80px">
         <el-row :gutter="20">
-         
-          <el-col :span="12">
-            <el-form-item label="时间段">
+          <el-col :span="8">
+            <el-form-item label="productName">
+              <el-select
+                size="mini"
+                v-model="formF.productName"
+                placeholder=""
+                @change="productNameChange"
+                :disabled="dialogTitle == 'Edit'"
+              >
+                <el-option
+                  v-for="item in productList"
+                  :value="item.name"
+                  :label="item.name"
+                  :key="item.id"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="productPrice">
               <el-input
                 size="mini"
-                v-model="rang"
+                v-model="formF.productPrice"
                 autocomplete="off"
                 disabled
               ></el-input> </el-form-item
           ></el-col>
-          <el-col :span="12">
-            <el-form-item label="销售员">
+          <el-col :span="8">
+            <el-form-item label="productNum">
               <el-input
                 size="mini"
-                v-model="seller"
+                v-model="formF.productNum"
                 autocomplete="off"
                 disabled
               ></el-input> </el-form-item
           ></el-col>
         </el-row>
         <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="产品">
+          <el-col :span="8">
+            <el-form-item label="buyNum">
               <el-input
                 size="mini"
-                v-model="product"
-                autocomplete="off"
-                disabled
-              ></el-input> </el-form-item
-          ></el-col>
-          <el-col :span="12">
-            <el-form-item label="数量">
-              <el-input
-                size="mini"
-                v-model="num"
+                v-model="formF.buyNum"
                 autocomplete="off"
                 @blur="buyNumBlur"
-                disabled
+                :disabled="dialogTitle == 'Edit'"
               ></el-input> </el-form-item
           ></el-col>
+          <el-col :span="8">
+            <el-form-item label="buyAmount">
+              <el-input
+                size="mini"
+                v-model="formF.buyAmount"
+                autocomplete="off"
+                disabled
+              ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="createTime">
+              <el-input
+                size="mini"
+                v-model="formF.createTime"
+                autocomplete="off"
+                disabled
+              ></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="8">
+            <el-form-item label="userName">
+              <el-input
+                size="mini"
+                v-model="formF.userName"
+                autocomplete="off"
+                disabled
+              ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="phone">
+              <el-input
+                size="mini"
+                v-model="formF.phone"
+                autocomplete="off"
+              ></el-input> </el-form-item
+          ></el-col>
+          <el-col :span="8">
+            <el-form-item label="remark">
+              <el-input
+                size="mini"
+                v-model="formF.remark"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="总价">
-              <el-input
+            <el-form-item label="saleChange">
+              <el-radio-group
+                v-model="sale"
                 size="mini"
-                v-model="price"
-                autocomplete="off"
-                disabled
-              ></el-input> </el-form-item
-          ></el-col>
-          <el-col :span="12">
-            <el-form-item label="成本">
+                style="display: flex; margin-top: 14px"
+                @change="saleChange"
+              >
+                <el-radio v-for="item in sales" :label="item.id" :key="item.id">
+                  {{ item.type + "" + item.num }}
+                </el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="money">
               <el-input
                 size="mini"
                 v-model="money"
                 autocomplete="off"
-                @blur="buyNumBlur"
                 disabled
-              ></el-input> </el-form-item
-          ></el-col>
+              ></el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <!-- <el-button size="mini" @click="onClose()">取 消</el-button> -->
+        <el-button size="mini" @click="onClose()">Cancel</el-button>
         <el-button size="mini" type="primary" @click="onSubMit('formF')"
-          >确定</el-button
+          >SubMit</el-button
         >
       </div>
     </el-dialog>
@@ -158,17 +214,10 @@ export default {
   data() {
     return {
       id: "",
-      name: "向阳",
-      rang: "近一个月",
-      seller: "seller1",
-      num: "720",
-      price: "89000",
-      money: "68300",
-      product: "产品一",
       productList: [],
       sales: [],
-      sellList: [],
       sale: "",
+      money: 0,
       orderList: [],
       dialogFormShow: false,
       dialogTitle: "",
@@ -202,7 +251,6 @@ export default {
     productListQuery({}).then((res) => {
       this.productList = res;
     });
-    //查询活动列表
     saleListQuery({}).then((res) => {
       this.sales = res;
     });
@@ -234,7 +282,7 @@ export default {
       }
       if (Number(this.formF.buyNum) > Number(this.formF.productNum)) {
         this.$message({
-          message: "可销售数量超过产品库存，请重新输入！",
+          message: "If the saleable quantity exceeds the product stock, please enter it again！",
           type: "warning",
         });
         this.formF.buyNum = this.formF.productNum;
@@ -252,11 +300,7 @@ export default {
           this.money = this.formF.buyAmount;
         }
       } else if (this.sale == "2") {
-        this.money = (
-          Number(this.formF.buyAmount) *
-          this.sales[1].num *
-          0.1
-        ).toFixed(0);
+        this.money = (Number(this.formF.buyAmount) * this.sales[1].num * 0.1).toFixed(0);
       } else {
         this.money = this.formF.buyAmount;
       }
@@ -265,11 +309,10 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           let param;
-          //新增菜单
-          if (this.dialogTitle == "新增") {
+          if (this.dialogTitle == "Add") {
             if (this.formF.buyNum == 0) {
               this.$message({
-                message: "请输入销售数量！",
+                message: "Please enter the sales quantity ",
                 type: "warning",
               });
               return;
@@ -293,7 +336,6 @@ export default {
               this.productEdit();
             });
           } else {
-            //修改菜单
             param = JSON.parse(JSON.stringify(this.formF));
             orderEdit(param).then((res) => {
               console.log(res);
@@ -301,7 +343,7 @@ export default {
               this.productEdit();
             });
           }
-          this.$refs.formF.resetFields(); //清空所有表单项
+          this.$refs.formF.resetFields(); 
           this.dialogFormShow = false;
         } else {
           return false;
@@ -317,42 +359,21 @@ export default {
     onClose() {
       this.dialogFormShow = false;
     },
-    sell() {
-      //出库操作确认提示
-      this.$confirm("该操作产品库存将实时减少, 确认是否继续?", "出库", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      })
-        .then(() => {
-          this.$message({
-            type: "success",
-            message: "出库成功!",
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消出库操作",
-          });
-        });
-    },
     handleEdit(index, row) {
       console.log(row);
       this.formF = { ...row };
       this.dialogFormShow = true;
-      this.dialogTitle = "出库";
+      this.dialogTitle = "Edit";
       this.productNameChange();
     },
     handleDelete(index, row) {
       orderDelete(row.id).then((res) => {
-        // console.log(res);
         this.query();
       });
     },
     dialogFormShowF() {
       this.dialogFormShow = true;
-      this.dialogTitle = "新增";
+      this.dialogTitle = "Add";
       this.formF = { ...this.formBase };
       this.formF.userName = localStorage.getItem("loginName");
       this.formF.phone = "";
